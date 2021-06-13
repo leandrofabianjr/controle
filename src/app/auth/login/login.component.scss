@@ -1,0 +1,18 @@
+@import '/node_modules/bootstrap-4-grid/scss/grid.scss';
+@import "_variables.scss";
+
+.login-background {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-color: $pimary;
+}
+
+.login-container {
+  max-width: map-get($container-max-widths, "sm");
+  background-color: aqua;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
