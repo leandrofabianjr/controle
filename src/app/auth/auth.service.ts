@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   get currentUser(): UserDto | undefined {
-    const data = localStorage.getItem('currentUser');
+    const data = localStorage.getItem('user');
     if (!data) return undefined;
     return JSON.parse(data) as UserDto;
   }

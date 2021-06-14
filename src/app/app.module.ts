@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
     MatFormFieldModule,
     MatInputModule,
     AuthModule,
+    DashboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
