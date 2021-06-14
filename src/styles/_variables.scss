@@ -1,5 +1,5 @@
 @import 'theme';
 
-$color-primary: map-get($primary, 500);
-$color-accent: map-get($accent, 200);
-
+$color-primary: map-get($primary-palette, 500);
+$color-accent: map-get($accent-palette, 200);
+$color-background: map-get($background, 'status-bar');

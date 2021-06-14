@@ -1,25 +1,9 @@
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-
-
-@media (min-width: 992px) {
-  .container {
-      width: 970px;
-   }
-}
-
 $grid-breakpoints: (
-  xs: 0,
   sm: 576px,
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1400px
+  xxl: 1400px,
 );
 
 $container-max-widths: (
@@ -27,9 +11,28 @@ $container-max-widths: (
   md: 720px,
   lg: 960px,
   xl: 1140px,
-  xxl: 1320px
+  xxl: 1320px,
 );
 
-@each $breakpoint in map-keys($grid-breakpoints) {
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+    .container {
+      width: map-get($container-max-widths, $breakpoint);
+    }
+  }
+}
+
+.mr-auto {
+  margin: auto;
+}
+
+.text-center {
+  text-align: center;
 }

@@ -8,3 +8,11 @@ $accent: mat.define-palette(mat.$pink-palette);
 $theme: mat.define-light-theme($primary, $accent);
 
 @include mat.all-component-themes($theme);
+
+// Variáveis
+$colors: map-get($theme, 'color');
+$primary-palette: map-get($colors, 'primary');
+$accent-palette: map-get($colors, 'accent');
+$warn-palette: map-get($colors, 'warn');
+$foreground: map-get($colors, 'foreground');
+$background: map-get($colors, 'background');

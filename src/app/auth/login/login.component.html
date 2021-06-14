@@ -1,14 +1,27 @@
 <div class="login-background">
   <div class="container">
     <mat-card class="login-container m-auto">
-      <mat-form-field appearance="outline">
-        <mat-label>E-mail</mat-label>
-        <input matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Senha</mat-label>
-        <input matInput>
-      </mat-form-field>
+      <h1 class="text-center">Controle</h1>
+
+      <form [formGroup]="loginForm" (ngSubmit)="doLogin()">
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error>
+            <app-form-control-error [control]="loginForm.controls['email']"></app-form-control-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-error>
+            <app-form-control-error [control]="loginForm.controls['password']"></app-form-control-error>
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">Entrar</button>
+      </form>
     </mat-card>
   </div>
 </div>
