@@ -20,6 +20,8 @@
           </mat-error>
         </mat-form-field>
 
+        <span class="text-warn text-500 m-auto mb-3" *ngIf="errorMessage">{{ errorMessage }}</span>
+
         <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">Entrar</button>
       </form>
     </mat-card>

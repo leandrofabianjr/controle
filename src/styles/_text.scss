@@ -1,0 +1,13 @@
+@import 'variables';
+
+.text-center {
+  text-align: center;
+}
+
+.text-500 {
+  font-weight: 500;
+}
+
+.text-warn {
+  color: $color-warn;
+}

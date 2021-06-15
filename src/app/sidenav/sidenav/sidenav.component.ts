@@ -12,7 +12,7 @@ export class SidenavComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
 
-  @Input() opened = true;
+  @Input() opened = false;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

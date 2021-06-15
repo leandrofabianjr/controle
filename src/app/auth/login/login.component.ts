@@ -11,6 +11,8 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   private toUrl: string = '/';
 
+  errorMessage?: string;
+
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,7 +36,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe(
       () => this.router.navigate([this.toUrl]),
-      (error) => console.log(error)
+      (error) => {
+        console.log(error);
+        this.errorMessage = error?.error?.message;
+      }
     );
   }
 }
