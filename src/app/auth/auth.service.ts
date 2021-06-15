@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserDto } from './dtos/user.dto';
+import { Router } from '@angular/router';
 
 interface AccessTokenDto {
   access: string;
@@ -13,7 +14,7 @@ interface AccessTokenDto {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get currentUser(): UserDto | undefined {
     const data = localStorage.getItem('user');
@@ -22,7 +23,6 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<void> {
-    console.log('fazendo login');
     return this.http
       .post<AccessTokenDto>('http://localhost:3000/jwt/token', {
         username: email,
@@ -30,10 +30,16 @@ export class AuthService {
       })
       .pipe(
         map((res) => {
-          console.log('Resposta:', res);
           localStorage.setItem('user', JSON.stringify(res.user));
           localStorage.setItem('access-token', JSON.stringify(res.access));
         })
       );
+  }
+
+  logout() {
+    console.log('logout');
+    localStorage.removeItem('user');
+    localStorage.removeItem('access-token');
+    this.router.navigate(['/login']);
   }
 }

@@ -1,0 +1,15 @@
+<mat-toolbar color="transparent">
+  <button mat-icon-button (click)="toggleMenu.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-name">Controle</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  </mat-menu>
+</mat-toolbar>

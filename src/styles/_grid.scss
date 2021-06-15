@@ -19,17 +19,18 @@ $container-max-widths: (
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+  width: calc(100% - 30px);
 }
 
 @each $breakpoint in map-keys($grid-breakpoints) {
   @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
     .container {
-      width: map-get($container-max-widths, $breakpoint);
+      max-width: map-get($container-max-widths, $breakpoint);
     }
   }
 }
 
-.mr-auto {
+.m-auto {
   margin: auto;
 }
 
