@@ -1,1 +1,27 @@
-<p>orders-form works!</p>
+<main>
+  <section class="container">
+    <h1>Nova encomenda</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Cliente</mat-label>
+        <input matInput formControlName="customer" type="text">
+        <mat-error>
+          <app-form-control-error [control]="orderForm.controls['customer']"></app-form-control-error>
+        </mat-error>
+      </mat-form-field> -->
+
+      <mat-autocomplete #auto="matAutocomplete" formControlName="customer">
+        <mat-option *ngFor="let customer of customers" [value]="customer">
+          {{customer.name}}
+        </mat-option>
+        <mat-error>
+          <app-form-control-error [control]="orderForm.controls['customer']"></app-form-control-error>
+        </mat-error>
+      </mat-autocomplete>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!orderForm.valid">
+        Salvar
+      </button>
+    </form>
+  </section>
+</main>
