@@ -24,8 +24,7 @@ export class SidenavComponent implements OnDestroy {
     this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
 
-  toggle(): void {
+  toggle() {
     this.opened = !this.opened;
-    console.log(this.opened);
   }
 }
