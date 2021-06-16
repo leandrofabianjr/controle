@@ -16,6 +16,13 @@ const routes: Routes = [
           );
         },
       },
+      {
+        path: 'orders',
+        loadChildren: () => {
+          console.log('orders route');
+          return import('../orders/orders.module').then((m) => m.OrdersModule);
+        },
+      },
     ],
   },
   {
