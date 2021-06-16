@@ -1,24 +1,39 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatListModule } from '@angular/material/list';
-
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { AuthModule } from '../auth/auth.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { AuthenticatedComponent } from './authenticated/authenticated.component';
-import { SidenavModule } from '../sidenav/sidenav.module';
 import { MenuComponent } from './menu/menu.component';
 
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+
 @NgModule({
-  declarations: [AuthenticatedComponent, MenuComponent],
+  declarations: [
+    AuthenticatedComponent,
+    SidenavComponent,
+    ToolbarComponent,
+    MenuComponent,
+  ],
   imports: [
     CommonModule,
     AuthModule,
     AuthenticatedRoutingModule,
-    SidenavModule,
     DashboardModule,
     MatListModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
 })
 export class AuthenticatedModule {}

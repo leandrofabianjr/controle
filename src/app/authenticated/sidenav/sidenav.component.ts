@@ -1,6 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-sidenav',

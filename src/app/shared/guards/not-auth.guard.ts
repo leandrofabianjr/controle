@@ -4,25 +4,24 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class NotAuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    console.log(state.url);
     if (this.authService.currentUser) {
-      return true;
+      this.router.navigate(['/']);
+      return false;
     }
-
-    this.router.navigate(['/login'], { queryParams: { to: state.url } });
-    return false;
+    return true;
   }
 }
