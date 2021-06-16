@@ -1,0 +1,13 @@
+<mat-form-field class="form-field" appearance="outline">
+  <mat-label>Cliente{{ loading ? ' (Carregando...)' : '' }}</mat-label>
+  <input matInput type="text" [matAutocomplete]="auto" [ngModel]="inputValue" (ngModelChange)="onInputChange()" [disabled]="loading"/>
+  <mat-error>
+    <app-form-control-error [control]="control"></app-form-control-error>
+  </mat-error>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith" (optionSelected)="onSelect($event?.option?.value)">
+  <mat-option *ngFor="let item of filtered | async" [value]="item">
+    {{item.name}}
+  </mat-option>
+</mat-autocomplete>

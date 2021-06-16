@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CustomersModule } from '../customers/customers.module';
 
 @NgModule({
   declarations: [OrdersFormComponent, OrdersComponent],
@@ -23,6 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
     OrdersRoutingModule,
     SharedModule,
+    CustomersModule,
 
     MatIconModule,
     MatButtonModule,
