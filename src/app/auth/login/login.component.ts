@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin(): void {
-    if (this.loginForm.invalid || !this.loginForm.touched) return;
+    if (this.loginForm.invalid || !this.loginForm.value) return;
 
     const { email, password } = this.loginForm.value;
 
