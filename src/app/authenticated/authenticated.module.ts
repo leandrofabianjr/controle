@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { AuthModule } from '../auth/auth.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
-import { AuthenticatedComponent } from './authenticated/authenticated.component';
+import { AuthenticatedComponent } from './authenticated.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { MatListModule } from '@angular/material/list';
