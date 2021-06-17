@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerFormDialogComponent } from '../customer-form-dialog/customer-form-dialog.component';
 import { CustomersService } from '../customers.service';
@@ -12,13 +11,11 @@ import { CustomerDto } from '../dtos/customer.dto';
   styleUrls: ['./customers-dropdown.component.scss'],
 })
 export class CustomersDropdownComponent implements OnInit {
-  @Input() control: AbstractControl = new FormControl();
+  @Input() control = new FormControl();
 
   loading = true;
 
   selectedItem?: CustomerDto;
-
-  inputValue?: string;
 
   filtered = this.customersService.filtered;
 
@@ -43,20 +40,17 @@ export class CustomersDropdownComponent implements OnInit {
 
   onInputChange(): void {}
 
-  onSelect(): void {
-    console.log(this.selectedItem, this.inputValue);
-    this.control.setValue(this.selectedItem?.id);
-  }
-
   create() {
-    const data = this.inputValue;
+    const data = this.control.value;
     const dialogRef = this.dialog.open(CustomerFormDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((res: CustomerDto) => {
-      console.log(res);
-      this.filtered.next([res]);
-      this.selectedItem = res;
-      this.onSelect();
+      if (res) {
+        this.filtered.next([res]);
+        this.filtered.subscribe((_) => {
+          this.control.setValue(res);
+        });
+      }
     });
   }
 }

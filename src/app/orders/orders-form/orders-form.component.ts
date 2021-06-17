@@ -7,8 +7,10 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./orders-form.component.scss'],
 })
 export class OrdersFormComponent implements OnInit {
+  customerControl = this.fb.control(null, [Validators.required]);
+
   orderForm = this.fb.group({
-    customer: ['', [Validators.required]],
+    customer: this.customerControl,
     dateToBeDone: ['', [Validators.required]],
   });
 

@@ -1,17 +1,15 @@
 <mat-form-field class="form-field" appearance="outline">
   <mat-label>Cliente{{ loading ? ' (Carregando...)' : '' }}</mat-label>
-  <input matInput type="text" [matAutocomplete]="auto" [ngModel]="inputValue" (ngModelChange)="onInputChange()"
-    [disabled]="loading" />
+  <input matInput type="text" [matAutocomplete]="auto" [formControl]="control" (ngModelChange)="onInputChange()" />
   <mat-error>
     <app-form-control-error [control]="control"></app-form-control-error>
   </mat-error>
 </mat-form-field>
 
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith"
-  (optionSelected)="onSelect()" [(ngModel)]="selectedItem">
-  <mat-option *ngFor="let item of filtered | async" [value]="item">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+  <mat-option *ngFor="let item of (filtered | async)" [value]="item">
     {{item.name}}
   </mat-option>
 </mat-autocomplete>
 
-<button mat-button color="accent" (click)="create()">Criar novo</button>
+<button class="w-100 mb-3" mat-button color="accent" (click)="create()">Cadastrar novo cliente</button>

@@ -16,6 +16,8 @@ export class CustomerFormDialogComponent implements OnInit {
     phone: [''],
   });
 
+  errorMessage?: string;
+
   constructor(
     private dialogRef: MatDialogRef<CustomerFormDialogComponent, CustomerDto>,
     private fb: FormBuilder,
@@ -26,12 +28,17 @@ export class CustomerFormDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
+    console.log('verificando');
     if (this.customerForm.invalid || !this.customerForm.value) return;
-    this.customersService
-      .create(this.customerForm.value)
-      .subscribe({
-        next: (res) => this.dialogRef.close(res),
-        error: (err) => console.error(err),
-      });
+    console.log(this.customerForm.value);
+    this.customersService.create(this.customerForm.value).subscribe({
+      next: (res) => this.dialogRef.close(res),
+      error: (error) => {
+        console.error(error);
+        this.errorMessage =
+          error?.error?.message ?? error?.message ?? 'Erro desconhecido';
+        console.log(this.errorMessage);
+      },
+    });
   }
 }

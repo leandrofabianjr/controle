@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Novo cliente</h1>
 
 <div mat-dialog-content>
-  <form class="d-flex flex-column" (ngSubmit)="onSubmit()" #frm [formGroup]="customerForm">
+  <form id="frmCustomer" class="d-flex flex-column" (ngSubmit)="onSubmit()" [formGroup]="customerForm">
     <mat-form-field appearance="outline">
       <mat-label>Nome</mat-label>
       <input matInput formControlName="name" type="text">
@@ -26,9 +26,10 @@
       </mat-error>
     </mat-form-field>
   </form>
+  <span class="text-warn text-500 m-auto mb-3" *ngIf="errorMessage">{{ errorMessage }}</span>
 </div>
 
 <div class="d-flex justify-content-between" mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="">Cancelar</button>
-  <button mat-raised-button color="primary" type="submit" [formTarget]="frm">Salvar</button>
+  <button mat-button [mat-dialog-close]="null">Cancelar</button>
+  <button mat-raised-button color="primary" type="submit" form="frmCustomer">Salvar</button>
 </div>

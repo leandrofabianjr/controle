@@ -2,7 +2,7 @@
   <section class="container">
     <h1>Nova encomenda</h1>
     <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
-      <app-customers-dropdown [control]="orderForm.controls['customer']"></app-customers-dropdown>
+      <app-customers-dropdown [control]="customerControl"></app-customers-dropdown>
 
       <button mat-raised-button color="primary" type="submit" [disabled]="!orderForm.valid">
         Salvar
