@@ -28,4 +28,12 @@ export class CustomersService {
         })
       );
   }
+
+  create(dto: CustomerDto): Observable<CustomerDto> {
+    const token = localStorage.getItem('access-token') || '';
+    const headers = { Authorization: 'Bearer ' + JSON.parse(token) };
+    return this.http.post<CustomerDto>('http://localhost:3000/customers', dto, {
+      headers,
+    });
+  }
 }
