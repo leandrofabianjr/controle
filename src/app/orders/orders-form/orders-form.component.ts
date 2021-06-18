@@ -11,12 +11,14 @@ export class OrdersFormComponent implements OnInit {
 
   orderForm = this.fb.group({
     customer: this.customerControl,
-    dateToBeDone: ['', [Validators.required]],
+    dateToBeDone: [null, [Validators.required]],
   });
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.orderForm.invalid || !this.orderForm.value) return;
+  }
 }

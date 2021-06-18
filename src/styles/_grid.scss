@@ -55,11 +55,11 @@ $directions: (
 @each $size in map-keys($spacer-sizes) {
   @each $dir in map-keys($directions) {
     .m#{$dir}-#{$size} {
-      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size);
+      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size) !important;
     }
 
     .p#{$dir}-#{$size} {
-      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size);
+      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size) !important;
     }
   }
 }

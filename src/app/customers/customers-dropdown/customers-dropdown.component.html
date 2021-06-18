@@ -1,4 +1,4 @@
-<mat-form-field class="form-field" appearance="outline">
+<mat-form-field class="form-field" appearance="fill">
   <mat-label>Cliente{{ loading ? ' (Carregando...)' : '' }}</mat-label>
   <input matInput type="text" [matAutocomplete]="auto" [formControl]="control" (ngModelChange)="onInputChange()" />
   <mat-error>
@@ -12,4 +12,4 @@
   </mat-option>
 </mat-autocomplete>
 
-<button class="w-100 mb-3" mat-button color="accent" (click)="create()">Cadastrar novo cliente</button>
+<button class="w-100 mb-4" mat-button color="accent" (click)="create()">Cadastrar novo cliente</button>
