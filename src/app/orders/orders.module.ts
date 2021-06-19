@@ -16,7 +16,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomersModule } from '../customers/customers.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [OrdersFormComponent, OrdersComponent],
@@ -37,7 +36,6 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatStepperModule,
   ],
 })
 export class OrdersModule {}

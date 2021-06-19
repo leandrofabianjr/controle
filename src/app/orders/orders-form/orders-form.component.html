@@ -10,25 +10,21 @@
     </p>
 
     <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+      <app-customers-dropdown [control]="customerControl"></app-customers-dropdown>
 
-      <mat-vertical-stepper #stepper>
+      <mat-form-field appearance="fill">
+        <mat-label>Data da entrega</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateToBeDone">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          <app-form-control-error [control]="orderForm.controls['dateToBeDone']"></app-form-control-error>
+        </mat-error>
+      </mat-form-field>
 
-        <app-customers-dropdown [control]="customerControl"></app-customers-dropdown>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Data da entrega</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dateToBeDone">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error>
-            <app-form-control-error [control]="orderForm.controls['dateToBeDone']"></app-form-control-error>
-          </mat-error>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" class="mt-3" type="submit" [disabled]="!orderForm.valid">
-          Salvar
-        </button>
-      </mat-vertical-stepper>
+      <button mat-raised-button color="primary" class="mt-3" type="submit" [disabled]="!orderForm.valid">
+        Salvar
+      </button>
     </form>
   </section>
 </main>

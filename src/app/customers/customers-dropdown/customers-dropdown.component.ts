@@ -42,7 +42,10 @@ export class CustomersDropdownComponent implements OnInit {
 
   create() {
     const data = this.control.value;
-    const dialogRef = this.dialog.open(CustomerFormDialogComponent, { data });
+    const dialogRef = this.dialog.open(CustomerFormDialogComponent, {
+      data,
+      minWidth: '50vw',
+    });
 
     dialogRef.afterClosed().subscribe((res: CustomerDto) => {
       if (res) {
