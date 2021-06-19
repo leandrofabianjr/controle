@@ -1,0 +1,17 @@
+<mat-form-field class="form-field" appearance="fill">
+  <mat-label>Produto{{ loading ? ' (Carregando...)' : '' }}</mat-label>
+  <input matInput type="text" [matAutocomplete]="auto" [formControl]="formControl" (ngModelChange)="onInputChange()" />
+  <mat-error>
+    <app-form-control-error [control]="control"></app-form-control-error>
+  </mat-error>
+  <button mat-mini-fab color="accent" (click)="create()" matSuffix type="button" matTooltip="Cadastrar novo produto" matTooltipPosition="above" matTooltipClass="tooltip-accent">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+  <mat-option *ngFor="let item of (filtered | async)" [value]="item">
+    {{item.name}}
+  </mat-option>
+</mat-autocomplete>
+

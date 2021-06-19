@@ -1,3 +1,10 @@
+$next-breakpoint: (
+  sm: md,
+  md: lg,
+  lg: xl,
+  xl: xxl,
+);
+
 $grid-breakpoints: (
   sm: 576px,
   md: 768px,
@@ -18,8 +25,8 @@ $spacer: 1rem;
 
 $spacer-sizes: (
   0: 0,
-  1: $spacer * .25,
-  2: $spacer * .5,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
@@ -40,10 +47,33 @@ $directions: (
   width: calc(100% - 30px);
 }
 
+.row {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: $spacer;
+}
+
 @each $breakpoint in map-keys($grid-breakpoints) {
   @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
     .container {
       max-width: map-get($container-max-widths, $breakpoint);
+    }
+  }
+}
+
+@each $breakpoint in map-keys($next-breakpoint) {
+  $next-breakpoint-value: map-get($next-breakpoint, $breakpoint);
+  @media (min-width: map-get($grid-breakpoints, $next-breakpoint-value)) {
+    @for $cols from 1 to 12 {
+      .col-#{$breakpoint}-#{$cols} {
+        grid-column: span $cols !important;
+      }
+
+      .row-#{$breakpoint} {
+        display: grid !important;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: $spacer;
+      }
     }
   }
 }
@@ -55,17 +85,40 @@ $directions: (
 @each $size in map-keys($spacer-sizes) {
   @each $dir in map-keys($directions) {
     .m#{$dir}-#{$size} {
-      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size) !important;
+      margin-#{map-get($directions, $dir)}: map-get(
+        $spacer-sizes,
+        $size
+      ) !important;
     }
 
     .p#{$dir}-#{$size} {
-      margin-#{map-get($directions, $dir)}: map-get($spacer-sizes, $size) !important;
+      margin-#{map-get($directions, $dir)}: map-get(
+        $spacer-sizes,
+        $size
+      ) !important;
     }
   }
 }
 
-.w-100 { width: 100% }
+.w-100 {
+  width: 100% !important;
+}
 
-.d-flex { display: flex }
-.flex-column { flex-direction: column }
-.justify-content-between { justify-content: space-between }
+.d-flex {
+  display: flex !important;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-row {
+  flex-direction: row !important;
+}
+.justify-content-between {
+  justify-content: space-between !important;
+}
+.align-items-center {
+  align-items: center !important;
+}

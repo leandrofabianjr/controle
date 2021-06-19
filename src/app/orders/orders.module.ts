@@ -16,6 +16,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomersModule } from '../customers/customers.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { ProductsModule } from '../products/products.module';
 
 @NgModule({
   declarations: [OrdersFormComponent, OrdersComponent],
@@ -27,6 +29,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     OrdersRoutingModule,
     SharedModule,
     CustomersModule,
+    ProductsModule,
 
     MatIconModule,
     MatButtonModule,
@@ -36,6 +39,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatListModule,
   ],
 })
 export class OrdersModule {}
