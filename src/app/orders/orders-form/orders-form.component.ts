@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ProductDto } from 'src/app/products/dtos/product.dto';
 
 @Component({
   selector: 'app-orders-form',
@@ -24,8 +25,8 @@ export class OrdersFormComponent implements OnInit {
   });
 
   addItemForm = this.fb.group({
-    quantity: [null, Validators.required],
     product: [null, Validators.required],
+    quantity: [null, Validators.required],
   });
 
   constructor(private fb: FormBuilder) {}
@@ -37,14 +38,16 @@ export class OrdersFormComponent implements OnInit {
   }
 
   addItem() {
+    if (this.addItemForm.invalid || !this.addItemForm.value) return;
     const itemForm = this.fb.group({
-      quantity: [null, Validators.required],
-      product: [null, Validators.required],
+      product: this.addItemForm.controls['product'],
+      quantity: this.addItemForm.controls['quantity'],
     });
     this.itemsFormArray.push(itemForm);
   }
 
-  productControlFrom(itemForm: AbstractControl): FormControl {
-    return (itemForm as FormGroup).controls['product'] as FormControl;
+  getProductFromForm(itemForm: AbstractControl): ProductDto {
+    const product = (itemForm as FormGroup).controls['product'] as FormControl;
+    return product?.value;
   }
 }
