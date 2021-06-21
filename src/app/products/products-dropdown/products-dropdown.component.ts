@@ -31,18 +31,15 @@ export class ProductsDropdownComponent implements OnInit {
   displayWith = (value: ProductDto) => value?.name;
 
   ngOnInit(): void {
-    this.filter();
     this.filtered.subscribe((_) => (this.loading = false));
   }
 
-  filter(): void {
+  filter(term: string = ''): void {
     this.loading = true;
     this.productsService
-      .filter()
+      .filter(term)
       .subscribe({ error: (err) => console.error(err) });
   }
-
-  onInputChange(): void {}
 
   create() {
     const data = this.control.value;
