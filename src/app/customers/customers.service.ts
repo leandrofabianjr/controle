@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 import { CustomerDto } from './dtos/customer.dto';
 
 @Injectable({
@@ -10,12 +11,10 @@ import { CustomerDto } from './dtos/customer.dto';
 export class CustomersService {
   filtered = new BehaviorSubject<CustomerDto[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   filter(): Observable<CustomerDto[]> {
-    console.log('vai filtrar');
-    const token = localStorage.getItem('access-token') || '';
-    const headers = { Authorization: 'Bearer ' + JSON.parse(token) };
+    const headers = this.authService.authHeader;
     return this.http
       .get<CustomerDto[]>('http://localhost:3000/customers', {
         headers,
@@ -30,8 +29,7 @@ export class CustomersService {
   }
 
   create(dto: CustomerDto): Observable<CustomerDto> {
-    const token = localStorage.getItem('access-token') || '';
-    const headers = { Authorization: 'Bearer ' + JSON.parse(token) };
+    const headers = this.authService.authHeader;
     return this.http.post<CustomerDto>('http://localhost:3000/customers', dto, {
       headers,
     });

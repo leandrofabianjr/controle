@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 import { ProductDto } from './dtos/product.dto';
 @Injectable({
   providedIn: 'root',
@@ -10,11 +11,10 @@ import { ProductDto } from './dtos/product.dto';
 export class ProductsService {
   filtered = new BehaviorSubject<ProductDto[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   filter(search: string = ''): Observable<ProductDto[]> {
-    const token = localStorage.getItem('access-token') || '';
-    const headers = { Authorization: 'Bearer ' + JSON.parse(token) };
+    const headers = this.authService.authHeader;
     const params = new HttpParams().set('limit', 5).set('search', search);
     const config = {
       params,
@@ -31,13 +31,7 @@ export class ProductsService {
   }
 
   create(body: ProductDto): Observable<ProductDto> {
-    const token = localStorage.getItem('access-token') || '';
-    const headers = { Authorization: 'Bearer ' + JSON.parse(token) };
-    const config = { headers };
-    return this.http.post<ProductDto>(
-      `${environment.apiUrl}/products`,
-      body,
-      config
-    );
+    const headers = this.authService.authHeader;
+    return this.http.post<ProductDto>(`${environment.apiUrl}/products`,body, { headers });
   }
 }
