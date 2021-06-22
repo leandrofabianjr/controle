@@ -13,6 +13,8 @@ import { ProductDto } from '../dtos/product.dto';
 export class ProductsDropdownComponent implements OnInit {
   @Input() control: AbstractControl = new FormControl();
 
+  filterControl = new FormControl();
+
   loading = true;
 
   selectedItem?: ProductDto;
@@ -42,7 +44,7 @@ export class ProductsDropdownComponent implements OnInit {
   }
 
   create() {
-    const data = this.control.value;
+    const data = this.filterControl.value;
     const dialogRef = this.dialog.open(ProductFormDialogComponent, {
       data,
       minWidth: '50vw',
