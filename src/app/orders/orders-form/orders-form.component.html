@@ -44,14 +44,7 @@
         </div>
       </form>
 
-      <mat-list role="list">
-        <ng-container *ngFor="let itemForm of itemsFormArray.controls" role="listitem">
-          <mat-list-item>
-            {{ getProductFromForm(itemForm).name }}
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </ng-container>
-      </mat-list>
+      <app-order-items-list [items]="orderItems"></app-order-items-list>
 
       <button mat-raised-button color="primary" class="mt-3" type="submit" [disabled]="!orderForm.valid">
         Finalizar e salvar a encomenda

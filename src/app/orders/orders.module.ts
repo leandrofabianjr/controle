@@ -17,10 +17,12 @@ import { CustomersModule } from '../customers/customers.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 import { ProductsModule } from '../products/products.module';
+import { OrderItemsListComponent } from './order-items-list/order-items-list.component';
 
 @NgModule({
-  declarations: [OrdersFormComponent, OrdersComponent],
+  declarations: [OrdersFormComponent, OrdersComponent, OrderItemsListComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -40,6 +42,7 @@ import { ProductsModule } from '../products/products.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
+    MatTableModule,
   ],
 })
 export class OrdersModule {}
