@@ -5,15 +5,30 @@ import { FormControlErrorComponent } from './form-control-error/form-control-err
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DebounceSearchingDirective } from './directives/debounce-searching.directive';
+import { DropdownWithCreationComponent } from './components/dropdown-with-creation/dropdown-with-creation.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [FormControlErrorComponent, DebounceSearchingDirective],
-  exports: [FormControlErrorComponent, DebounceSearchingDirective],
+  declarations: [
+    FormControlErrorComponent,
+    DebounceSearchingDirective,
+    DropdownWithCreationComponent,
+  ],
+  exports: [
+    FormControlErrorComponent,
+    DebounceSearchingDirective,
+    DropdownWithCreationComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    NgxMatSelectSearchModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatSelectModule,
+    MatButtonModule,
   ],
 })
 export class SharedModule {}

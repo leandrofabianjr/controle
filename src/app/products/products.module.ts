@@ -25,9 +25,6 @@ import { MatSelectModule } from '@angular/material/select';
 
     SharedModule,
 
-    NgxMatSelectSearchModule,
-
-    MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
