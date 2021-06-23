@@ -116,8 +116,14 @@ $directions: (
 .flex-row {
   flex-direction: row !important;
 }
+.justify-content-center {
+  justify-content: center !important;
+}
 .justify-content-between {
   justify-content: space-between !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
 }
 .align-items-center {
   align-items: center !important;

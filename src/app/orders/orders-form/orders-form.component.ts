@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
 import { OrderItemDto } from '../dtos/order-item.dto';
 
@@ -30,7 +31,8 @@ export class OrdersFormComponent implements OnInit {
     quantity: [null, Validators.required],
   });
 
-  orderItems: OrderItemDto[] = [];
+  private orderItems: OrderItemDto[] = [];
+  orderItemsSubject = new BehaviorSubject<OrderItemDto[]>([]);
 
   constructor(private fb: FormBuilder) {}
 
@@ -42,6 +44,7 @@ export class OrdersFormComponent implements OnInit {
 
   addItem() {
     if (this.addItemForm.invalid || !this.addItemForm.value) return;
+    console.log('sss');
     const form = this.addItemForm.controls;
     const itemForm = this.fb.group({
       product: form['product'],
@@ -53,11 +56,26 @@ export class OrdersFormComponent implements OnInit {
       product: form['product'].value,
       quantity: form['quantity'].value,
     };
-    this.orderItems.push(item);
+    this.orderItems.unshift(item);
+    this.orderItemsSubject.next(this.orderItems);
+
+    this.resetAddItemForm();
+  }
+
+  resetAddItemForm() {
+    Object.keys(this.addItemForm.controls).forEach((key) => {
+      this.addItemForm.controls[key].setValue(null);
+      this.addItemForm.controls[key].setErrors(null);
+    });
   }
 
   getProductFromForm(itemForm: AbstractControl): ProductDto {
     const product = (itemForm as FormGroup).controls['product'] as FormControl;
     return product?.value;
+  }
+
+  removeItem(index: any) {
+    this.orderItems.splice(index, 1);
+    this.orderItemsSubject.next(this.orderItems);
   }
 }

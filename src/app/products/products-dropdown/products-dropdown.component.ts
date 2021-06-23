@@ -15,11 +15,13 @@ export class ProductsDropdownComponent implements OnInit {
 
   filterControl = new FormControl();
 
-  loading = true;
+  loading = false;
 
   selectedItem?: ProductDto;
 
   filtered = this.productsService.filtered;
+
+  showNewItemButton = false;
 
   get formControl(): FormControl {
     return this.control as FormControl;
@@ -30,17 +32,19 @@ export class ProductsDropdownComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  displayWith = (value: ProductDto) => value?.name;
-
   ngOnInit(): void {
-    this.filtered.subscribe((_) => (this.loading = false));
+    this.filtered.subscribe((arr) => (this.showNewItemButton = arr.length > 0));
   }
 
+  displayWith = (value: ProductDto) => value?.name;
+
   filter(term: string = ''): void {
+    this.showNewItemButton = false;
     this.loading = true;
-    this.productsService
-      .filter(term)
-      .subscribe({ error: (err) => console.error(err) });
+    this.productsService.filter(term).subscribe({
+      error: (err) => console.error(err),
+      complete: () => (this.loading = false),
+    });
   }
 
   create() {

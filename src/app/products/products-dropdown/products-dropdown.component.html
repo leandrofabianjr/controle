@@ -6,7 +6,7 @@
         [formControl]="filterControl" (appDebounceSearching)="filter($event)">
       </ngx-mat-select-search>
     </mat-option>
-    <mat-option *ngIf="!(filtered | async)?.length && filterControl?.value?.length" [value]="null">
+    <mat-option *ngIf="showNewItemButton" [value]="null">
       <button class="w-100" mat-button color="accent" (click)="create()">Cadastrar "{{ filterControl.value }}"</button>
     </mat-option>
     <mat-option *ngFor="let item of filtered | async" [value]="item">

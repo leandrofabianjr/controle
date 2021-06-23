@@ -1,18 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { OrderItemDto } from '../dtos/order-item.dto';
 
 @Component({
   selector: 'app-order-items-list',
   templateUrl: './order-items-list.component.html',
-  styleUrls: ['./order-items-list.component.scss']
+  styleUrls: ['./order-items-list.component.scss'],
 })
-export class OrderItemsListComponent implements OnInit {
+export class OrderItemsListComponent {
+  @ViewChild('tableElement') table: any;
 
-  @Input() items: OrderItemDto[] = [];
+  @Input() items = new BehaviorSubject<OrderItemDto[]>([]);
 
-  constructor() { }
+  @Output() onRemoveItem = new EventEmitter<number>();
 
-  ngOnInit(): void {
+  constructor() {}
+
+  print() {
+    console.log(this.items);
   }
-
 }
