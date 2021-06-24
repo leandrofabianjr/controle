@@ -1,15 +1,2 @@
-<mat-form-field class="form-field" appearance="fill">
-  <mat-label>Cliente{{ loading ? ' (Carregando...)' : '' }}</mat-label>
-  <input matInput type="text" [matAutocomplete]="auto" [formControl]="control" (ngModelChange)="onInputChange()" />
-  <mat-error>
-    <app-form-control-error [control]="control"></app-form-control-error>
-  </mat-error>
-</mat-form-field>
-
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
-  <mat-option *ngFor="let item of (filtered | async)" [value]="item">
-    {{item.name}}
-  </mat-option>
-</mat-autocomplete>
-
-<button class="w-100 mb-4" mat-button color="accent" (click)="create()">Cadastrar novo cliente</button>
+<app-dropdown-with-creation label="Cliente" placeholder="Busque pelo cliente" [control]="control"
+  [filteredItems]="filtered" (onCreateNew)="create($event)" (onFilter)="filter($event)"></app-dropdown-with-creation>

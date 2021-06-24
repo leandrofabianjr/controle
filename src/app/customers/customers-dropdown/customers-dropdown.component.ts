@@ -10,12 +10,8 @@ import { CustomerDto } from '../dtos/customer.dto';
   templateUrl: './customers-dropdown.component.html',
   styleUrls: ['./customers-dropdown.component.scss'],
 })
-export class CustomersDropdownComponent implements OnInit {
+export class CustomersDropdownComponent {
   @Input() control = new FormControl();
-
-  loading = true;
-
-  selectedItem?: CustomerDto;
 
   filtered = this.customersService.filtered;
 
@@ -24,24 +20,13 @@ export class CustomersDropdownComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  displayWith = (value: CustomerDto) => value?.name;
-
-  ngOnInit(): void {
-    this.filter();
-    this.filtered.subscribe((_) => (this.loading = false));
-  }
-
-  filter(): void {
-    this.loading = true;
+  filter(term: string = ''): void {
     this.customersService
-      .filter()
+      .filter(term)
       .subscribe({ error: (err) => console.error(err) });
   }
 
-  onInputChange(): void {}
-
-  create() {
-    const data = this.control.value;
+  create(data: string) {
     const dialogRef = this.dialog.open(CustomerFormDialogComponent, {
       data,
       minWidth: '50vw',

@@ -1,5 +1,5 @@
 <main>
-  <section class="container">
+  <section class="container mb-5">
     <h1>Nova encomenda</h1>
 
     <p>
@@ -27,7 +27,7 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="addItemForm" class="row-sm" (ngSubmit)="addItem()">
         <app-products-dropdown [control]="addItemForm.controls['product']" class="col-sm-6"></app-products-dropdown>
 
-        <div class="d-flex align-items-center col-sm-6">
+        <div class="d-flex col-sm-6">
           <mat-form-field appearance="fill" class="flex-grow-1">
             <mat-label>Quantidade</mat-label>
             <input matInput type="number" formControlName="quantity">

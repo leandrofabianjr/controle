@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { CustomerDto } from './dtos/customer.dto';
 
@@ -13,15 +14,17 @@ export class CustomersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  filter(): Observable<CustomerDto[]> {
+  filter(search: string = ''): Observable<CustomerDto[]> {
     const headers = this.authService.authHeader;
+    const params = new HttpParams().set('limit', 5).set('search', search);
+    const config = {
+      params,
+      headers,
+    };
     return this.http
-      .get<CustomerDto[]>('http://localhost:3000/customers', {
-        headers,
-      })
+      .get<CustomerDto[]>(`${environment.apiUrl}/customers`, config)
       .pipe(
         map((res) => {
-          console.log(res);
           this.filtered.next(res);
           return res;
         })
