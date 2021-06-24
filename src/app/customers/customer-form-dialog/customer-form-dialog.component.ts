@@ -16,7 +16,7 @@ export class CustomerFormDialogComponent implements OnInit {
     phone: [''],
   });
 
-  errorMessage?: string;
+  error?: string;
 
   constructor(
     private dialogRef: MatDialogRef<CustomerFormDialogComponent, CustomerDto>,
@@ -33,11 +33,9 @@ export class CustomerFormDialogComponent implements OnInit {
     console.log(this.customerForm.value);
     this.customersService.create(this.customerForm.value).subscribe({
       next: (res) => this.dialogRef.close(res),
-      error: (error) => {
-        console.error(error);
-        this.errorMessage =
-          error?.error?.message ?? error?.message ?? 'Erro desconhecido';
-        console.log(this.errorMessage);
+      error: (e) => {
+        console.error(e);
+        this.error = e?.error?.message ?? e?.message ?? 'Erro desconhecido';
       },
     });
   }

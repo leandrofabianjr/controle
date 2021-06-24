@@ -9,13 +9,14 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
 import { OrderItemDto } from '../dtos/order-item.dto';
+import { OrdersService } from '../orders.service';
 
 @Component({
   selector: 'app-orders-form',
   templateUrl: './orders-form.component.html',
   styleUrls: ['./orders-form.component.scss'],
 })
-export class OrdersFormComponent implements OnInit {
+export class OrdersFormComponent {
   customerControl = this.fb.control(null, [Validators.required]);
 
   itemsFormArray = this.fb.array([]);
@@ -34,13 +35,9 @@ export class OrdersFormComponent implements OnInit {
   private orderItems: OrderItemDto[] = [];
   orderItemsSubject = new BehaviorSubject<OrderItemDto[]>([]);
 
-  constructor(private fb: FormBuilder) {}
+  error?: string;
 
-  ngOnInit(): void {}
-
-  onSubmit() {
-    if (this.orderForm.invalid || !this.orderForm.value) return;
-  }
+  constructor(private fb: FormBuilder, private ordersService: OrdersService) {}
 
   addItem() {
     if (this.addItemForm.invalid || !this.addItemForm.value) return;
@@ -77,5 +74,19 @@ export class OrdersFormComponent implements OnInit {
   removeItem(index: any) {
     this.orderItems.splice(index, 1);
     this.orderItemsSubject.next(this.orderItems);
+  }
+
+  onSubmit() {
+    if (this.orderForm.invalid || !this.orderForm.value) return;
+
+    console.log(this.orderForm.value);
+
+    this.ordersService.create(this.orderForm.value).subscribe({
+      next: (res) => console.log(res),
+      error: (e) => {
+        console.error(e);
+        this.error = e?.error?.message ?? e?.message ?? 'Erro desconhecido';
+      },
+    });
   }
 }

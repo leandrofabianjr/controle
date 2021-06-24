@@ -1,7 +1,7 @@
-import { OrderItemDto } from "./order-item.dto";
+import { OrderItemDto } from './order-item.dto';
 
 export interface OrderDto {
   customer: string;
-  items: OrderItemDto;
-  dateToBeDone: Date | string;
+  items: OrderItemDto[];
+  dateToBeDone: string;
 }
