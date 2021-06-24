@@ -1,5 +1,5 @@
 <div *ngIf="!itemsFormArray?.length" class="mt-4 mb-4 d-flex justify-content-center">
-  <span>Adicione items na lista.</span>
+  <span>Adicione items na encomenda.</span>
 </div>
 
 <table *ngIf="itemsFormArray?.length" mat-table [dataSource]="itemsFormArray?.value" class="w-100">
@@ -15,7 +15,7 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let item; let i = index;">
       <div class="d-flex justify-content-end">
-        <button mat-icon-button color="accent" type="button" (click)="onRemoveItem.emit(i)" matTooltip="Remover item">
+        <button mat-icon-button color="accent" type="button" (click)="removeItem(i)" matTooltip="Remover item">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

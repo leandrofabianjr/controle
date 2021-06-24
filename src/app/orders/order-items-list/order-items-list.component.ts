@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
 @Component({
@@ -17,7 +11,9 @@ export class OrderItemsListComponent {
 
   @Input() itemsFormArray?: FormArray;
 
-  @Output() onRemoveItem = new EventEmitter<number>();
-
   constructor() {}
+
+  removeItem(index: number) {
+    this.itemsFormArray?.removeAt(index);
+  }
 }

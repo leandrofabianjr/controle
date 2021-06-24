@@ -41,7 +41,7 @@
         </div>
       </form>
 
-      <app-order-items-list [itemsFormArray]="itemsFormArray" (onRemoveItem)="removeItem($event)"></app-order-items-list>
+      <app-order-items-list [itemsFormArray]="itemsFormArray"></app-order-items-list>
 
       <span class="text-warn text-500 m-auto mb-3 mt-3" *ngIf="error">{{ error }}</span>
 
