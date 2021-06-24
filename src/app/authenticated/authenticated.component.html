@@ -1,5 +1,10 @@
 <app-sidenav #sidenav>
-  <app-menu sidenav></app-menu>
+  <mat-nav-list sidenav class="nav-list">
+    <ng-container *ngFor="let item of menuItems">
+      <a mat-list-item [routerLink]="item.route" (click)="sidenav.toggle()">{{ item.label }}</a>
+    </ng-container>
+  </mat-nav-list>
+
   <div content>
     <app-toolbar (toggleMenu)="sidenav.toggle()"></app-toolbar>
     <router-outlet></router-outlet>

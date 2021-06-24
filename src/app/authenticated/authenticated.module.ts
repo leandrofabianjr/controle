@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { AuthModule } from '../auth/auth.module';
 import { AuthenticatedComponent } from './authenticated.component';
-import { MenuComponent } from './menu/menu.component';
 
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -16,12 +15,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
-  declarations: [
-    AuthenticatedComponent,
-    SidenavComponent,
-    ToolbarComponent,
-    MenuComponent,
-  ],
+  declarations: [AuthenticatedComponent, SidenavComponent, ToolbarComponent],
   imports: [
     CommonModule,
     AuthModule,

@@ -5,8 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './authenticated.component.html',
   styleUrls: ['./authenticated.component.scss'],
 })
-export class AuthenticatedComponent implements OnInit {
-  constructor() {}
+export class AuthenticatedComponent {
+  menuItems = [
+    { label: 'Início', route: '' },
+    { label: 'Encomendas', route: 'orders' },
+  ];
 
-  ngOnInit(): void {}
+  constructor() {}
 }
