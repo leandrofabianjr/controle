@@ -9,6 +9,7 @@ import { DropdownWithCreationComponent } from './components/dropdown-with-creati
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatAutocompleteModule,
     MatSelectModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
 })
 export class SharedModule {}

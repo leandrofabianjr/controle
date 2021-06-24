@@ -2,12 +2,9 @@
   <section class="container mb-5">
     <h1>Nova encomenda</h1>
 
-    <p>
-      Para cadastrar uma nova encomenda, selecione o cliente, informe a data de entrega e clique no botão "Salvar".
-    </p>
-    <p class="mb-5">
-      Se o cliente ainda não foi cadastrado, clique no botão "Cadastrar novo cliente".
-    </p>
+    <p>Para cadastrar uma nova encomenda, selecione o cliente, informe a data de entrega e adicione os items da
+      encomenda.</p>
+    <p class="mb-5">Se o cliente ainda não foi cadastrado, clique no botão "Cadastrar novo cliente".</p>
 
     <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
       <app-customers-dropdown [control]="customerControl"></app-customers-dropdown>
@@ -24,15 +21,15 @@
 
       <h3 class="mr-3">Items da encomenda:</h3>
 
-      <form [formGroup]="addItemForm" class="row-sm" (ngSubmit)="addItem()">
-        <app-products-dropdown [control]="addItemForm.controls['product']" class="col-sm-6"></app-products-dropdown>
+      <form [formGroup]="itemForm" class="row-sm" (ngSubmit)="addItem()">
+        <app-products-dropdown [control]="itemForm.controls['product']" class="col-sm-6"></app-products-dropdown>
 
         <div class="d-flex col-sm-6">
           <mat-form-field appearance="fill" class="flex-grow-1">
             <mat-label>Quantidade</mat-label>
             <input matInput type="number" formControlName="quantity">
             <mat-error>
-              <app-form-control-error [control]="addItemForm.controls['quantity']"></app-form-control-error>
+              <app-form-control-error [control]="itemForm.controls['quantity']"></app-form-control-error>
             </mat-error>
           </mat-form-field>
           <button mat-fab type="submit" class="ml-3" matTooltip="Adicionar item">

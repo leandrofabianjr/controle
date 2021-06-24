@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,9 +7,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
-import { OrderItemDto } from '../dtos/order-item.dto';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { OrderItem } from '../models/order-item';
 import { OrdersService } from '../orders.service';
 
@@ -28,12 +29,17 @@ export class OrdersFormComponent {
     items: this.itemsFormArray,
   });
 
-  addItemForm: FormGroup;
+  itemForm: FormGroup;
 
   error?: string;
 
-  constructor(private fb: FormBuilder, private ordersService: OrdersService) {
-    this.addItemForm = this.buildNewItemForm();
+  constructor(
+    private fb: FormBuilder,
+    private ordersService: OrdersService,
+    private alertService: AlertService,
+    private router: Router
+  ) {
+    this.itemForm = this.buildNewItemForm();
   }
 
   private buildNewItemForm(item?: OrderItem): FormGroup {
@@ -44,9 +50,9 @@ export class OrdersFormComponent {
   }
 
   addItem() {
-    if (this.addItemForm.invalid || !this.addItemForm.value) return;
+    if (this.itemForm.invalid || !this.itemForm.value) return;
 
-    const item = this.addItemForm.value as OrderItem;
+    const item = this.itemForm.value as OrderItem;
     const itemForm = this.buildNewItemForm(item);
     this.itemsFormArray.push(itemForm);
 
@@ -54,9 +60,9 @@ export class OrdersFormComponent {
   }
 
   resetAddItemForm() {
-    Object.keys(this.addItemForm.controls).forEach((key) => {
-      this.addItemForm.controls[key].setValue(null);
-      this.addItemForm.controls[key].setErrors(null);
+    Object.keys(this.itemForm.controls).forEach((key) => {
+      this.itemForm.controls[key].setValue(null);
+      this.itemForm.controls[key].setErrors(null);
     });
   }
 
@@ -65,17 +71,16 @@ export class OrdersFormComponent {
     return product?.value;
   }
 
-  removeItem(index: any) {
-    console.log(this.itemsFormArray, index);
-  }
-
   onSubmit() {
     if (this.orderForm.invalid || !this.orderForm.value) return;
 
-    console.log(this.orderForm.value);
-
     this.ordersService.create(this.orderForm.value).subscribe({
-      next: (res) => console.log(res),
+      next: (res) => {
+        const date = formatDate(res.dateToBeDone, 'shortDate', 'pt-BR');
+        const message = `Encomenda de ${res.customer.name} para ${date} cadastrada com sucesso`;
+        this.alertService.success(message);
+        this.router.navigate(['/']);
+      },
       error: (e) => {
         console.error(e);
         this.error = e?.error?.message ?? e?.message ?? 'Erro desconhecido';
