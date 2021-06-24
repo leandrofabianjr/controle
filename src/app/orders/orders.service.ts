@@ -16,17 +16,26 @@ export class OrdersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  filter(search: string = '', limit = 5): Observable<OrderDto[]> {
+  filter(
+    search: string = '',
+    size = 5,
+    page = 0,
+    offset = size * page
+  ): Observable<OrderDto[]> {
     const headers = this.authService.authHeader;
-    const params = new HttpParams().set('limit', limit).set('search', search);
-    const config = {
-      params,
-      headers,
-    };
+    const params = new HttpParams()
+      .set('limit', size)
+      .set('offset', offset)
+      .set('search', search);
+    console.log('foi');
     return this.http
-      .get<OrderDto[]>(`${environment.apiUrl}/orders`, config)
+      .get<OrderDto[]>(`${environment.apiUrl}/orders`, {
+        params,
+        headers,
+      })
       .pipe(
         map((res) => {
+          console.log(res);
           this.filtered.next(res);
           return res;
         })

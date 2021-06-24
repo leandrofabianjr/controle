@@ -5,8 +5,8 @@
     </ng-container>
   </mat-nav-list>
 
-  <div content>
+  <ng-container content>
     <app-toolbar (toggleMenu)="sidenav.toggle()"></app-toolbar>
     <router-outlet></router-outlet>
-  </div>
+  </ng-container>
 </app-sidenav>

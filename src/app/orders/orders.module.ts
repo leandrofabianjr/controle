@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { ProductsModule } from '../products/products.module';
 import { OrderItemsListComponent } from './order-items-list/order-items-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [OrdersFormComponent, OrdersComponent, OrderItemsListComponent],
@@ -43,6 +44,7 @@ import { OrderItemsListComponent } from './order-items-list/order-items-list.com
     MatNativeDateModule,
     MatListModule,
     MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class OrdersModule {}
