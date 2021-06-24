@@ -1,26 +1,15 @@
-<!-- <mat-list role="list">
-  <ng-container *ngFor="let item of items" role="listitem">
-    <mat-list-item>
-      <div class="d-flex justify-content-between align-items-center w-100">
-        <span>{{ item.product.name }}</span>
-        <span>{{ item.quantity }}</span>
-        <button mat-icon-button color="accent" type="button" matTooltip="Remover item">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-  </ng-container>
-</mat-list> -->
+<div *ngIf="!itemsFormArray?.length" class="mt-4 mb-4 d-flex justify-content-center">
+  <span>Adicione items na lista.</span>
+</div>
 
-<table #tableElement mat-table [dataSource]="items" class="w-100">
+<table *ngIf="itemsFormArray?.length" mat-table [dataSource]="itemsFormArray?.value" class="w-100">
   <ng-container matColumnDef="product">
     <th mat-header-cell *matHeaderCellDef>Produto</th>
-    <td mat-cell *matCellDef="let item"> {{item.product.name}} </td>
+    <td mat-cell *matCellDef="let item"> {{item?.product?.name}} </td>
   </ng-container>
   <ng-container matColumnDef="quantity">
     <th mat-header-cell *matHeaderCellDef>Quantidade</th>
-    <td mat-cell *matCellDef="let item"> {{item.quantity}} </td>
+    <td mat-cell *matCellDef="let item"> {{item?.quantity}} </td>
   </ng-container>
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>

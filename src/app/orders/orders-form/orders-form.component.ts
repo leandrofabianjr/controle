@@ -9,6 +9,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
 import { OrderItemDto } from '../dtos/order-item.dto';
+import { OrderItem } from '../models/order-item';
 import { OrdersService } from '../orders.service';
 
 @Component({
@@ -27,34 +28,27 @@ export class OrdersFormComponent {
     items: this.itemsFormArray,
   });
 
-  addItemForm = this.fb.group({
-    product: [null, Validators.required],
-    quantity: [null, Validators.required],
-  });
-
-  private orderItems: OrderItemDto[] = [];
-  orderItemsSubject = new BehaviorSubject<OrderItemDto[]>([]);
+  addItemForm: FormGroup;
 
   error?: string;
 
-  constructor(private fb: FormBuilder, private ordersService: OrdersService) {}
+  constructor(private fb: FormBuilder, private ordersService: OrdersService) {
+    this.addItemForm = this.buildNewItemForm();
+  }
+
+  private buildNewItemForm(item?: OrderItem): FormGroup {
+    return this.fb.group({
+      product: [item?.product, Validators.required],
+      quantity: [item?.quantity, Validators.required],
+    });
+  }
 
   addItem() {
     if (this.addItemForm.invalid || !this.addItemForm.value) return;
-    console.log('sss');
-    const form = this.addItemForm.controls;
-    const itemForm = this.fb.group({
-      product: form['product'],
-      quantity: form['quantity'],
-    });
-    this.itemsFormArray.push(itemForm);
 
-    const item: OrderItemDto = {
-      product: form['product'].value,
-      quantity: form['quantity'].value,
-    };
-    this.orderItems.unshift(item);
-    this.orderItemsSubject.next(this.orderItems);
+    const item = this.addItemForm.value as OrderItem;
+    const itemForm = this.buildNewItemForm(item);
+    this.itemsFormArray.push(itemForm);
 
     this.resetAddItemForm();
   }
@@ -72,8 +66,7 @@ export class OrdersFormComponent {
   }
 
   removeItem(index: any) {
-    this.orderItems.splice(index, 1);
-    this.orderItemsSubject.next(this.orderItems);
+    console.log(this.itemsFormArray, index);
   }
 
   onSubmit() {
