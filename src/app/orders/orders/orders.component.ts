@@ -8,7 +8,7 @@ import { OrdersService } from '../orders.service';
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  displayedColumns = ['date', 'customer'];
+  displayedColumns = ['customer', 'date'];
   pageSizeOptions = [5, 10, 20];
   size = this.pageSizeOptions[0];
   page = 0;

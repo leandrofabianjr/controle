@@ -14,11 +14,11 @@ import { OrderItem } from '../models/order-item';
 import { OrdersService } from '../orders.service';
 
 @Component({
-  selector: 'app-orders-form',
-  templateUrl: './orders-form.component.html',
-  styleUrls: ['./orders-form.component.scss'],
+  selector: 'app-order-form',
+  templateUrl: './order-form.component.html',
+  styleUrls: ['./order-form.component.scss'],
 })
-export class OrdersFormComponent {
+export class OrderFormComponent {
   customerControl = this.fb.control(null, [Validators.required]);
 
   itemsFormArray = this.fb.array([]);

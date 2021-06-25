@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { OrdersRoutingModule } from './orders-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { OrdersFormComponent } from './orders-form/orders-form.component';
+import { OrderFormComponent } from './order-form/order-form.component';
 import { OrdersComponent } from './orders/orders.component';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [OrdersFormComponent, OrdersComponent, OrderItemsListComponent],
+  declarations: [OrderFormComponent, OrdersComponent, OrderItemsListComponent],
   imports: [
     CommonModule,
     FormsModule,

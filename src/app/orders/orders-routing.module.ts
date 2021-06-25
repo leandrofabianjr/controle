@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OrdersFormComponent } from './orders-form/orders-form.component';
+import { OrderFormComponent } from './order-form/order-form.component';
 import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    component: OrdersFormComponent,
+    component: OrderFormComponent,
   },
 ];
 
