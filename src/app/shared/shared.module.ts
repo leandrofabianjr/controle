@@ -10,17 +10,21 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoadingComponent } from './components/loading/loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
     FormControlErrorComponent,
     DebounceSearchingDirective,
     DropdownWithCreationComponent,
+    LoadingComponent,
   ],
   exports: [
     FormControlErrorComponent,
     DebounceSearchingDirective,
     DropdownWithCreationComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SharedModule {}

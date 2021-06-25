@@ -8,7 +8,7 @@ import { OrdersService } from '../orders.service';
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  displayedColumns = ['customer', 'date', 'actions'];
+  displayedColumns = ['date', 'customer'];
   pageSizeOptions = [5, 10, 20];
   size = this.pageSizeOptions[0];
   page = 0;
@@ -17,12 +17,13 @@ export class OrdersComponent implements OnInit {
   loading = false;
 
   filtered = this.ordersService.filtered;
+  pagination = this.ordersService.pagination;
 
   constructor(private ordersService: OrdersService) {}
 
   ngOnInit(): void {
     this.filter();
-    this.filtered.subscribe({ complete: () => (this.loading = false) });
+    this.filtered.subscribe(() => (this.loading = false));
   }
 
   filter() {

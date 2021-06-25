@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
+import { PaginatedResponse } from '../shared/interfaces/paginated-response';
+import { PaginationData } from '../shared/interfaces/pagination-data';
 import { OrderItemDto } from './dtos/order-item.dto';
 import { OrderDto } from './dtos/order.dto';
 import { Order } from './models/order';
@@ -12,7 +14,8 @@ import { Order } from './models/order';
   providedIn: 'root',
 })
 export class OrdersService {
-  filtered = new BehaviorSubject<OrderDto[]>([]);
+  filtered = new BehaviorSubject<Order[]>([]);
+  pagination = new BehaviorSubject<PaginationData>(new PaginationData());
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -21,23 +24,23 @@ export class OrdersService {
     size = 5,
     page = 0,
     offset = size * page
-  ): Observable<OrderDto[]> {
+  ): Observable<Order[]> {
     const headers = this.authService.authHeader;
     const params = new HttpParams()
       .set('limit', size)
       .set('offset', offset)
       .set('search', search);
-    console.log('foi');
+
     return this.http
-      .get<OrderDto[]>(`${environment.apiUrl}/orders`, {
+      .get<PaginatedResponse<Order>>(`${environment.apiUrl}/orders`, {
         params,
         headers,
       })
       .pipe(
-        map((res) => {
-          console.log(res);
-          this.filtered.next(res);
-          return res;
+        map(({ data, total, limit, offset }) => {
+          this.filtered.next(data);
+          this.pagination.next(new PaginationData(total, limit, offset));
+          return data;
         })
       );
   }

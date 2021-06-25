@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ProductsModule } from '../products/products.module';
 import { OrderItemsListComponent } from './order-items-list/order-items-list.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [OrdersFormComponent, OrdersComponent, OrderItemsListComponent],
@@ -45,6 +46,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class OrdersModule {}
