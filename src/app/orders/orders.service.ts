@@ -45,6 +45,13 @@ export class OrdersService {
       );
   }
 
+  find(id: string): Observable<Order> {
+    const headers = this.authService.authHeader;
+    return this.http.get<Order>(`${environment.apiUrl}/orders/${id}`, {
+      headers,
+    });
+  }
+
   create(model: Order): Observable<Order> {
     const body = this.modelToDto(model);
     const headers = this.authService.authHeader;

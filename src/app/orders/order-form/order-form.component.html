@@ -6,7 +6,9 @@
       encomenda.</p>
     <p class="mb-5">Se o cliente ainda não foi cadastrado, clique no botão "Cadastrar novo cliente".</p>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+    <app-loading *ngIf="loading"></app-loading>
+
+    <form *ngIf="!loading" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
       <app-customers-dropdown [control]="customerControl"></app-customers-dropdown>
 
       <mat-form-field appearance="fill">

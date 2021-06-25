@@ -1,15 +1,17 @@
 import { formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Order } from '../models/order';
 import { OrderItem } from '../models/order-item';
 import { OrdersService } from '../orders.service';
 
@@ -18,11 +20,9 @@ import { OrdersService } from '../orders.service';
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.scss'],
 })
-export class OrderFormComponent {
+export class OrderFormComponent implements AfterViewInit {
   customerControl = this.fb.control(null, [Validators.required]);
-
   itemsFormArray = this.fb.array([]);
-
   orderForm = this.fb.group({
     customer: this.customerControl,
     dateToBeDone: [null, [Validators.required]],
@@ -31,15 +31,39 @@ export class OrderFormComponent {
 
   itemForm: FormGroup;
 
+  id?: string;
+  loading = true;
   error?: string;
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private ordersService: OrdersService,
-    private alertService: AlertService,
-    private router: Router
+    private alertService: AlertService
   ) {
     this.itemForm = this.buildNewItemForm();
+  }
+  ngAfterViewInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id') ?? undefined;
+    if (!this.id) return;
+
+    this.ordersService.find(this.id).subscribe({
+      next: this.initForm,
+      error: (err) => {
+        console.error(err);
+        const message =
+          err?.error?.message ??
+          err?.message ??
+          'Não foi possível carregar os dados da encomenda';
+        this.alertService.error(message);
+        this.router.navigate(['u', 'orders']);
+      },
+    });
+  }
+
+  private initForm(order: Order) {
+    this.orderForm.setValue(order);
   }
 
   private buildNewItemForm(item?: OrderItem): FormGroup {
