@@ -7,12 +7,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AlertService {
   constructor(private snackBar: MatSnackBar) {}
 
-  success(message: string) {
+  _buildAlert(type: 'success' | 'error', message: string) {
     this.snackBar.open(message, 'Ok', {
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
       duration: 7000,
-      panelClass: 'alert-success',
+      panelClass: `alert-${type}`,
     });
+  }
+
+  success(message: string) {
+    this._buildAlert('success', message);
+  }
+
+  error(message: string) {
+    this._buildAlert('error', message);
   }
 }

@@ -28,3 +28,21 @@ $background: map-get($colors, "background");
     }
   }
 }
+
+.alert-success {
+  background-color: map-get(mat.$green-palette, 500);
+  color: white;
+  font-weight: 300;
+  .mat-simple-snackbar-action  {
+    color: white;
+  }
+}
+
+.alert-error {
+  background-color: map-get($warn-palette, 600);
+  color: white;
+  font-weight: 300;
+  .mat-simple-snackbar-action  {
+    color: white;
+  }
+}
