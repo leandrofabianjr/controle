@@ -1,8 +1,7 @@
 import { formatDate } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -20,11 +19,10 @@ import { OrdersService } from '../orders.service';
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.scss'],
 })
-export class OrderFormComponent implements AfterViewInit {
-  customerControl = this.fb.control(null, [Validators.required]);
+export class OrderFormComponent implements OnInit {
   itemsFormArray = this.fb.array([]);
   orderForm = this.fb.group({
-    customer: this.customerControl,
+    customer: [null, [Validators.required]],
     dateToBeDone: [null, [Validators.required]],
     items: this.itemsFormArray,
   });
@@ -32,8 +30,12 @@ export class OrderFormComponent implements AfterViewInit {
   itemForm: FormGroup;
 
   id?: string;
-  loading = true;
+  loading = false;
   error?: string;
+
+  get customerControl(): FormControl {
+    return this.orderForm.controls['customer'] as FormControl;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -44,32 +46,43 @@ export class OrderFormComponent implements AfterViewInit {
   ) {
     this.itemForm = this.buildNewItemForm();
   }
-  ngAfterViewInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id') ?? undefined;
-    if (!this.id) return;
-
-    this.ordersService.find(this.id).subscribe({
-      next: this.initForm,
-      error: (err) => {
-        console.error(err);
-        const message =
-          err?.error?.message ??
-          err?.message ??
-          'Não foi possível carregar os dados da encomenda';
-        this.alertService.error(message);
-        this.router.navigate(['u', 'orders']);
-      },
-    });
-  }
 
   private initForm(order: Order) {
-    this.orderForm.setValue(order);
+    const { customer, dateToBeDone, items } = order;
+    const itemsFormGroups = items.map((i) => this.buildNewItemForm(i));
+
+    this.orderForm.controls['customer'].setValue(customer);
+    this.orderForm.controls['dateToBeDone'].setValue(dateToBeDone);
+    this.itemsFormArray = this.fb.array(itemsFormGroups);
+
+    this.loading = false;
+  }
+
+  private loadingItemError(err: any) {
+    console.error(err);
+    const message =
+      err?.error?.message ??
+      err?.message ??
+      'Não foi possível carregar os dados da encomenda';
+    this.alertService.error(message);
+    this.router.navigate(['u', 'orders']);
   }
 
   private buildNewItemForm(item?: OrderItem): FormGroup {
     return this.fb.group({
       product: [item?.product, Validators.required],
       quantity: [item?.quantity, Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id') ?? undefined;
+    if (!this.id) return;
+
+    this.loading = true;
+    this.ordersService.find(this.id).subscribe({
+      next: (order) => this.initForm(order),
+      error: (err) => this.loadingItemError(err),
     });
   }
 

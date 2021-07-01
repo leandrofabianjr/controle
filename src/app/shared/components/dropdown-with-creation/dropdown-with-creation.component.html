@@ -9,8 +9,8 @@
     <mat-option *ngIf="showNewItemButton" [value]="null">
       <button class="w-100" mat-button color="accent" (click)="create()">Cadastrar "{{ filterControl.value }}"</button>
     </mat-option>
-    <mat-option *ngFor="let item of filteredItems | async" [value]="item">
-      {{item.name}}
+    <mat-option *ngFor="let item of items" [value]="item">
+      {{item?.name}}
     </mat-option>
   </mat-select>
   <mat-error>
