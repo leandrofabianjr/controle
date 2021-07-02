@@ -8,8 +8,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Order } from '../models/order';
 import { OrderItem } from '../models/order-item';
@@ -31,7 +33,6 @@ export class OrderFormComponent implements OnInit {
 
   id?: string;
   loading = false;
-  error?: string;
 
   get customerControl(): FormControl {
     return this.orderForm.controls?.customer as FormControl;
@@ -46,7 +47,8 @@ export class OrderFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ordersService: OrdersService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public dialog: MatDialog
   ) {
     this.itemForm = this.buildNewItemForm();
   }
@@ -94,10 +96,29 @@ export class OrderFormComponent implements OnInit {
     if (this.itemForm.invalid || !this.itemForm.value) return;
 
     const item = this.itemForm.value as OrderItem;
-    const itemForm = this.buildNewItemForm(item);
-    (this.orderForm.controls.items as FormArray).push(itemForm);
 
-    this.resetAddItemForm();
+    if (
+      (this.orderForm.controls.items as FormArray).value.find(
+        (i: any) => i.product.id === item.product.id
+      )
+    ) {
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: 'O item já foi adicionado à encomenda, deseja atualizá-lo?',
+      });
+
+      dialogRef.afterClosed().subscribe((update: boolean) => {
+        if (update) {
+          // TODO Atualizar item
+        }
+      });
+    } else {
+      const itemForm = this.buildNewItemForm(item);
+      const itemsFormArray = this.orderForm.controls.items as FormArray;
+
+      itemsFormArray.push(itemForm);
+
+      this.resetAddItemForm();
+    }
   }
 
   resetAddItemForm() {
@@ -132,7 +153,8 @@ export class OrderFormComponent implements OnInit {
       },
       error: (e) => {
         console.error(e);
-        this.error = e?.error?.message ?? e?.message ?? 'Erro desconhecido';
+        const message = e?.error?.message ?? e?.message ?? 'Erro desconhecido';
+        this.alertService.error(message);
       },
     });
   }

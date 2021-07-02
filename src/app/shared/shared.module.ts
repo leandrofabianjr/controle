@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoadingComponent } from './components/loading/loading.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DebounceSearchingDirective,
     DropdownWithCreationComponent,
     LoadingComponent,
+    ConfirmationDialogComponent,
   ],
   exports: [
     FormControlErrorComponent,
@@ -36,6 +39,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
 })
 export class SharedModule {}
