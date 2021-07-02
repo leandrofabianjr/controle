@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -20,11 +21,10 @@ import { OrdersService } from '../orders.service';
   styleUrls: ['./order-form.component.scss'],
 })
 export class OrderFormComponent implements OnInit {
-  itemsFormArray = this.fb.array([]);
   orderForm = this.fb.group({
     customer: [null, [Validators.required]],
     dateToBeDone: [null, [Validators.required]],
-    items: this.itemsFormArray,
+    items: this.fb.array([]),
   });
 
   itemForm: FormGroup;
@@ -34,7 +34,11 @@ export class OrderFormComponent implements OnInit {
   error?: string;
 
   get customerControl(): FormControl {
-    return this.orderForm.controls['customer'] as FormControl;
+    return this.orderForm.controls?.customer as FormControl;
+  }
+
+  get itemsFormArray(): FormArray {
+    return this.orderForm.controls?.items as FormArray;
   }
 
   constructor(
@@ -53,7 +57,7 @@ export class OrderFormComponent implements OnInit {
 
     this.orderForm.controls['customer'].setValue(customer);
     this.orderForm.controls['dateToBeDone'].setValue(dateToBeDone);
-    this.itemsFormArray = this.fb.array(itemsFormGroups);
+    this.orderForm.controls['items'] = this.fb.array(itemsFormGroups);
 
     this.loading = false;
   }
@@ -91,15 +95,16 @@ export class OrderFormComponent implements OnInit {
 
     const item = this.itemForm.value as OrderItem;
     const itemForm = this.buildNewItemForm(item);
-    this.itemsFormArray.push(itemForm);
+    (this.orderForm.controls.items as FormArray).push(itemForm);
 
     this.resetAddItemForm();
   }
 
   resetAddItemForm() {
-    Object.keys(this.itemForm.controls).forEach((key) => {
-      this.itemForm.controls[key].setValue(null);
-      this.itemForm.controls[key].setErrors(null);
+    const controls = this.itemForm.controls;
+    Object.keys(controls).forEach((key) => {
+      controls[key].setValue(null);
+      controls[key].setErrors(null);
     });
   }
 
@@ -111,10 +116,17 @@ export class OrderFormComponent implements OnInit {
   onSubmit() {
     if (this.orderForm.invalid || !this.orderForm.value) return;
 
-    this.ordersService.create(this.orderForm.value).subscribe({
+    const value = this.orderForm.value;
+    value.items = this.orderForm.controls.items.value;
+
+    const response = this.id
+      ? this.ordersService.edit(this.id, value)
+      : this.ordersService.create(value);
+
+    response.subscribe({
       next: (res) => {
         const date = formatDate(res.dateToBeDone, 'shortDate', 'pt-BR');
-        const message = `Encomenda de ${res.customer.name} para ${date} cadastrada com sucesso`;
+        const message = `Encomenda de ${res.customer.name} para ${date} salva com sucesso`;
         this.alertService.success(message);
         this.router.navigate(['/']);
       },

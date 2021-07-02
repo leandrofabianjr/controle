@@ -45,19 +45,38 @@ export class OrdersService {
       );
   }
 
+  convertDate(order: Order): Order {
+    order.dateToBeDone = new Date(order.dateToBeDone);
+    return order;
+  }
+
   find(id: string): Observable<Order> {
     const headers = this.authService.authHeader;
-    return this.http.get<Order>(`${environment.apiUrl}/orders/${id}`, {
-      headers,
-    });
+    return this.http
+      .get<Order>(`${environment.apiUrl}/orders/${id}`, {
+        headers,
+      })
+      .pipe(map(this.convertDate));
   }
 
   create(model: Order): Observable<Order> {
     const body = this.modelToDto(model);
     const headers = this.authService.authHeader;
-    return this.http.post<Order>(`${environment.apiUrl}/orders`, body, {
-      headers,
-    });
+    return this.http
+      .post<Order>(`${environment.apiUrl}/orders`, body, {
+        headers,
+      })
+      .pipe(map(this.convertDate));
+  }
+
+  edit(id: string, model: Order): Observable<Order> {
+    const body = this.modelToDto(model);
+    const headers = this.authService.authHeader;
+    return this.http
+      .put<Order>(`${environment.apiUrl}/orders/${id}`, body, {
+        headers,
+      })
+      .pipe(map(this.convertDate));
   }
 
   private modelToDto(model: Order): OrderDto {
@@ -68,8 +87,6 @@ export class OrdersService {
         (i) => ({ product: i.product.id, quantity: i.quantity } as OrderItemDto)
       ),
     };
-    console.log('model', model);
-    console.log('dto', dto);
     return dto;
   }
 }
