@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDto } from 'src/app/products/dtos/product.dto';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Order } from '../models/order';
 import { OrderItem } from '../models/order-item';
 import { OrdersService } from '../orders.service';
@@ -76,8 +77,11 @@ export class OrderFormComponent implements OnInit {
 
   private buildNewItemForm(item?: OrderItem): FormGroup {
     return this.fb.group({
-      product: [item?.product, Validators.required],
-      quantity: [item?.quantity, Validators.required],
+      product: [item?.product, [Validators.required]],
+      quantity: [
+        item?.quantity,
+        [Validators.required, CustomValidators.greaterThan(0)],
+      ],
     });
   }
 
@@ -92,41 +96,45 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  addItem() {
-    if (this.itemForm.invalid || !this.itemForm.value) return;
+  onItemFormSubmit() {
+    console.log(
+      this.itemForm.invalid,
+      this.itemForm.errors,
+      !this.itemForm.value
+    );
+    if (this.itemForm.invalid || this.itemForm.errors || !this.itemForm.value)
+      return;
 
     const item = this.itemForm.value as OrderItem;
+    const itemsFormArray = this.orderForm.controls.items as FormArray;
+    const repeatedItemIndex = itemsFormArray.controls.findIndex(
+      (control: AbstractControl) => control.value.product.id === item.product.id
+    );
 
-    if (
-      (this.orderForm.controls.items as FormArray).value.find(
-        (i: any) => i.product.id === item.product.id
-      )
-    ) {
+    if (repeatedItemIndex >= 0) {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: 'O item já foi adicionado à encomenda, deseja atualizá-lo?',
       });
 
       dialogRef.afterClosed().subscribe((update: boolean) => {
         if (update) {
-          // TODO Atualizar item
+          (this.orderForm.controls.items as FormArray).removeAt(
+            repeatedItemIndex
+          );
+          this._addItem(item);
         }
       });
     } else {
-      const itemForm = this.buildNewItemForm(item);
-      const itemsFormArray = this.orderForm.controls.items as FormArray;
-
-      itemsFormArray.push(itemForm);
-
-      this.resetAddItemForm();
+      this._addItem(item);
     }
   }
 
-  resetAddItemForm() {
-    const controls = this.itemForm.controls;
-    Object.keys(controls).forEach((key) => {
-      controls[key].setValue(null);
-      controls[key].setErrors(null);
-    });
+  private _addItem(item: OrderItem) {
+    const itemForm = this.buildNewItemForm(item);
+    const itemsFormArray = this.orderForm.controls.items as FormArray;
+    itemsFormArray.push(itemForm);
+
+    this.itemForm.reset();
   }
 
   getProductFromForm(itemForm: AbstractControl): ProductDto {
@@ -149,7 +157,7 @@ export class OrderFormComponent implements OnInit {
         const date = formatDate(res.dateToBeDone, 'shortDate', 'pt-BR');
         const message = `Encomenda de ${res.customer.name} para ${date} salva com sucesso`;
         this.alertService.success(message);
-        this.router.navigate(['/']);
+        this.router.navigate(['u', 'orders']);
       },
       error: (e) => {
         console.error(e);

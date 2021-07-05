@@ -40,6 +40,7 @@ export class FormControlErrorComponent implements OnInit {
     // Validações de limites numéricos
     min: (e) => `O valor mínimo é ${e.min}`,
     max: (e) => `O valor máximo é ${e.max}`,
+    greaterThan: (e) => `O valor deve ser maior que ${e.greaterThan}`,
 
     // Validação de email
     email: (e) => 'O email informado não é válido',

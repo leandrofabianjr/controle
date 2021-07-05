@@ -47,11 +47,13 @@ export class DropdownWithCreationComponent implements OnInit {
       this.selectItem(value);
     });
 
-    this.selectItem(this.control.value);
+    if (this.control.value) {
+      this.selectItem(this.control.value);
+    }
   }
 
   private selectItem(item: any) {
-    if (!this.items.includes(item)) {
+    if (item && !this.items.includes(item)) {
       this.items.unshift(item);
     }
   }
@@ -63,5 +65,11 @@ export class DropdownWithCreationComponent implements OnInit {
 
   create() {
     this.onCreateNew.emit(this.filterControl.value);
+  }
+
+  onOpened() {
+    if (!this.items?.length) {
+      this.filter('');
+    }
   }
 }

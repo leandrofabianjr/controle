@@ -21,9 +21,9 @@ export class ProductsDropdownComponent {
   ) {}
 
   filter(term: string = ''): void {
-    this.productsService
-      .filter(term)
-      .subscribe({ error: (err) => console.error(err) });
+    this.productsService.filter(term).subscribe({
+      error: (err) => console.error(err),
+    });
   }
 
   create(data: string) {

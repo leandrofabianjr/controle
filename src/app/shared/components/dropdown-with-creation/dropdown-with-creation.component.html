@@ -1,6 +1,6 @@
 <mat-form-field class="w-100" appearance="fill">
   <mat-label>{{ label }}</mat-label>
-  <mat-select [formControl]="formControl" #singleSelect>
+  <mat-select [formControl]="formControl" #singleSelect (opened)="onOpened()">
     <mat-option>
       <ngx-mat-select-search [searching]="loading" placeholderLabel="{{ placeholder }}" noEntriesFoundLabel=""
         [formControl]="filterControl" (appDebounceSearching)="filter($event)">

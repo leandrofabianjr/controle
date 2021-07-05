@@ -23,7 +23,7 @@
 
       <h3 class="mr-3">Items da encomenda:</h3>
 
-      <form [formGroup]="itemForm" class="row-sm" (ngSubmit)="addItem()">
+      <form [formGroup]="itemForm" class="row-sm" (ngSubmit)="onItemFormSubmit()">
         <app-products-dropdown [control]="itemForm.controls['product']" class="col-sm-6"></app-products-dropdown>
 
         <div class="d-flex col-sm-6">
