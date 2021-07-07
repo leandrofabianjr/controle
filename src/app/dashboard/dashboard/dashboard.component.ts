@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { OrdersService } from 'src/app/orders/orders.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +8,17 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  orders = this.ordersService.filtered;
 
-  get currentUser() {
-    return this.authService.currentUser;
+  constructor(private ordersService: OrdersService) {}
+
+  ngOnInit(): void {
+    this.updateOrders();
   }
 
-  ngOnInit(): void {}
+  updateOrders(): void {
+    this.ordersService.filter({
+      size: 3,
+    });
+  }
 }

@@ -4,6 +4,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
+import {
+  buildFilterHttpParams,
+  FilterOptions,
+} from '../shared/interfaces/filter-options';
 import { PaginatedResponse } from '../shared/interfaces/paginated-response';
 import { PaginationData } from '../shared/interfaces/pagination-data';
 import { OrderItemDto } from './dtos/order-item.dto';
@@ -19,18 +23,11 @@ export class OrdersService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  filter(
-    search: string = '',
-    size = 5,
-    page = 0,
-    offset = size * page
-  ): Observable<Order[]> {
+  filter(options: FilterOptions): Observable<Order[]> {
     const headers = this.authService.authHeader;
-    const params = new HttpParams()
-      .set('limit', size)
-      .set('offset', offset)
-      .set('search', search);
+    const params = buildFilterHttpParams(options);
 
+    console.log(options);
     return this.http
       .get<PaginatedResponse<Order>>(`${environment.apiUrl}/orders`, {
         params,

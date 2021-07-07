@@ -28,9 +28,15 @@ export class OrdersComponent implements OnInit {
 
   filter() {
     this.loading = true;
-    this.ordersService.filter(this.search, this.size, this.page).subscribe({
-      error: (err) => console.error(err),
-    });
+    this.ordersService
+      .filter({
+        search: this.search,
+        size: this.size,
+        page: this.page,
+      })
+      .subscribe({
+        error: (err) => console.error(err),
+      });
   }
 
   changePage({ pageIndex, pageSize }: PageEvent) {

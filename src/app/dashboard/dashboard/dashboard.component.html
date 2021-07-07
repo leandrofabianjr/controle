@@ -3,6 +3,7 @@
 
     <p>dashboard works!</p>
     <pre>
-      {{ currentUser | json }}
+      {{ orders | async | json }}
     </pre>
+    <button (click)="updateOrders()">Atualizar</button>
   </div>
