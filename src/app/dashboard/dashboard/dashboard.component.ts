@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { Order } from 'src/app/orders/models/order';
 import { OrdersService } from 'src/app/orders/orders.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { OrdersService } from 'src/app/orders/orders.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  orders = this.ordersService.filtered;
+  orders?: Order[];
 
   constructor(private ordersService: OrdersService) {}
 
@@ -17,8 +17,8 @@ export class DashboardComponent implements OnInit {
   }
 
   updateOrders(): void {
-    this.ordersService.filter({
-      size: 3,
-    });
+    this.ordersService
+      .filter({ size: 3 })
+      .subscribe((orders) => (this.orders = orders));
   }
 }

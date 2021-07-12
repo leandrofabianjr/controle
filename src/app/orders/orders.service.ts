@@ -27,7 +27,6 @@ export class OrdersService {
     const headers = this.authService.authHeader;
     const params = buildFilterHttpParams(options);
 
-    console.log(options);
     return this.http
       .get<PaginatedResponse<Order>>(`${environment.apiUrl}/orders`, {
         params,
@@ -35,6 +34,7 @@ export class OrdersService {
       })
       .pipe(
         map(({ data, total, limit, offset }) => {
+          console.log(data);
           this.filtered.next(data);
           this.pagination.next(new PaginationData(total, limit, offset));
           return data;

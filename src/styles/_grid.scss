@@ -83,6 +83,14 @@ $directions: (
 }
 
 @each $size in map-keys($spacer-sizes) {
+  .m-#{$size} {
+    margin: map-get($spacer-sizes,$size) !important;
+  }
+
+  .p-#{$size} {
+    padding: map-get($spacer-sizes, $size) !important;
+  }
+
   @each $dir in map-keys($directions) {
     .m#{$dir}-#{$size} {
       margin-#{map-get($directions, $dir)}: map-get(
@@ -92,7 +100,7 @@ $directions: (
     }
 
     .p#{$dir}-#{$size} {
-      margin-#{map-get($directions, $dir)}: map-get(
+      padding-#{map-get($directions, $dir)}: map-get(
         $spacer-sizes,
         $size
       ) !important;
