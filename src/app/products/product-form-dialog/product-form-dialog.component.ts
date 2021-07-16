@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Product } from '../dtos/product';
+import { Product, UnitOfMeasurementEnum } from '../dtos/product';
 import { ProductsService } from '../products.service';
+import { CurrencyMaskConfig } from 'ngx-currency';
 
 @Component({
   selector: 'app-product-form-dialog',
@@ -12,9 +13,27 @@ import { ProductsService } from '../products.service';
 export class ProductFormDialogComponent implements OnInit {
   productForm = this.fb.group({
     name: [this.name, Validators.required],
+    unitOfMeasurement: [null, Validators.required],
+    value: [null, Validators.required],
   });
 
   errorMessage?: string;
+
+  get unitOfMeasurementsValues(): string[] {
+    return Object.keys(UnitOfMeasurementEnum);
+  }
+
+  currencyMaskOptions: CurrencyMaskConfig = {
+    align: 'left',
+    allowNegative: false,
+    allowZero: true,
+    decimal: ',',
+    precision: 2,
+    prefix: 'R$ ',
+    suffix: '',
+    thousands: '.',
+    nullable: true,
+  };
 
   constructor(
     private dialogRef: MatDialogRef<ProductFormDialogComponent, Product>,

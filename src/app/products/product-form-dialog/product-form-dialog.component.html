@@ -9,6 +9,30 @@
         <app-form-control-error [control]="productForm.controls['name']"></app-form-control-error>
       </mat-error>
     </mat-form-field>
+    <div class="row-sm">
+      <mat-form-field appearance="outline" class="col-sm-6">
+        <mat-label>Unidade de medida</mat-label>
+        <mat-select formControlName="unitOfMeasurement">
+          <mat-option *ngFor="let unit of unitOfMeasurementsValues" [value]="unit">
+            {{ unit }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          <app-form-control-error [control]="productForm.controls['unitOfMeasurement']"></app-form-control-error>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-sm-6">
+        <mat-label>Valor por unidade</mat-label>
+        <input matInput currencyMask formControlName="value" [options]="currencyMaskOptions"/>
+        <mat-error>
+          <app-form-control-error [control]="productForm.controls['value']"></app-form-control-error>
+        </mat-error>
+      </mat-form-field>
+      <pre>
+        {{ productForm.value | json }}
+      </pre>
+    </div>
   </form>
   <span class="text-warn text-500 m-auto mb-3" *ngIf="errorMessage">{{ errorMessage }}</span>
 </div>

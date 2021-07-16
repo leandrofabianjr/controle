@@ -11,6 +11,7 @@ export class ProductsService extends BaseService<Product> {
     return {
       name: model.name,
       unitOfMeasurement: model.unitOfMeasurement,
+      value: model.value,
     };
   }
 }

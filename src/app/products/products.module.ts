@@ -12,8 +12,8 @@ import { ProductFormDialogComponent } from './product-form-dialog/product-form-d
 import { ProductsDropdownComponent } from './products-dropdown/products-dropdown.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [ProductsDropdownComponent, ProductFormDialogComponent],
@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 
     SharedModule,
 
+    NgxCurrencyModule,
+
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
@@ -32,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     MatIconModule,
     MatTooltipModule,
+    MatSelectModule,
   ],
   exports: [ProductsDropdownComponent],
 })
