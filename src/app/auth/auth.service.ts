@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { UserDto } from './dtos/user.dto';
+import { User } from './dtos/user';
 import { Router } from '@angular/router';
 
 interface AccessTokenDto {
   access: string;
-  user: UserDto;
+  user: User;
 }
 
 @Injectable({
@@ -24,10 +24,10 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  get currentUser(): UserDto | undefined {
+  get currentUser(): User | undefined {
     const data = localStorage.getItem('user');
     if (!data) return undefined;
-    return JSON.parse(data) as UserDto;
+    return JSON.parse(data) as User;
   }
 
   login(email: string, password: string): Observable<void> {
@@ -53,13 +53,14 @@ export class AuthService {
 
   check(): Observable<boolean> {
     const headers = this.authHeader;
-    return this.http
-      .get('http://localhost:3000/jwt/check', { headers })
-      .pipe(map(_ => true), catchError(err => {
+    return this.http.get('http://localhost:3000/jwt/check', { headers }).pipe(
+      map((_) => true),
+      catchError((err) => {
         if (err?.status != 401) {
           console.error(err);
         }
         return of(false);
-      }));
+      })
+    );
   }
 }

@@ -4,37 +4,20 @@ import { BehaviorSubject, Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { CustomerDto } from './dtos/customer.dto';
+import { BaseService } from '../shared/base/base.service';
+import { Customer } from './dtos/customer';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CustomersService {
-  filtered = new BehaviorSubject<CustomerDto[]>([]);
+export class CustomersService extends BaseService<Customer> {
+  urlCollection = 'customers';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
-
-  filter(search: string = ''): Observable<CustomerDto[]> {
-    const headers = this.authService.authHeader;
-    const params = new HttpParams().set('limit', 5).set('search', search);
-    const config = {
-      params,
-      headers,
+  modelToDto(model: Customer) {
+    return {
+      name: model.name,
+      address: model.address,
+      phone: model.phone,
     };
-    return this.http
-      .get<CustomerDto[]>(`${environment.apiUrl}/customers`, config)
-      .pipe(
-        map((res) => {
-          this.filtered.next(res);
-          return res;
-        })
-      );
-  }
-
-  create(dto: CustomerDto): Observable<CustomerDto> {
-    const headers = this.authService.authHeader;
-    return this.http.post<CustomerDto>('http://localhost:3000/customers', dto, {
-      headers,
-    });
   }
 }

@@ -10,12 +10,12 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductDto } from 'src/app/products/dtos/product.dto';
+import { Product } from 'src/app/products/dtos/product';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
-import { Order } from '../models/order';
-import { OrderItem } from '../models/order-item';
+import { Order } from '../dtos/order';
+import { OrderItem } from '../dtos/order-item';
 import { OrdersService } from '../orders.service';
 
 @Component({
@@ -137,7 +137,7 @@ export class OrderFormComponent implements OnInit {
     this.itemForm.reset();
   }
 
-  getProductFromForm(itemForm: AbstractControl): ProductDto {
+  getProductFromForm(itemForm: AbstractControl): Product {
     const product = (itemForm as FormGroup).controls['product'] as FormControl;
     return product?.value;
   }

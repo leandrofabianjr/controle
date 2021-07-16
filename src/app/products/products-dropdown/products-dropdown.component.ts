@@ -3,7 +3,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductFormDialogComponent } from '../product-form-dialog/product-form-dialog.component';
 import { ProductsService } from '../products.service';
-import { ProductDto } from '../dtos/product.dto';
+import { Product } from '../dtos/product';
 
 @Component({
   selector: 'app-products-dropdown',
@@ -21,7 +21,7 @@ export class ProductsDropdownComponent {
   ) {}
 
   filter(term: string = ''): void {
-    this.productsService.filter(term).subscribe({
+    this.productsService.filter({ search: term, size: 10 }).subscribe({
       error: (err) => console.error(err),
     });
   }
@@ -32,7 +32,7 @@ export class ProductsDropdownComponent {
       minWidth: '50vw',
     });
 
-    dialogRef.afterClosed().subscribe((res: ProductDto) => {
+    dialogRef.afterClosed().subscribe((res: Product) => {
       if (res) {
         this.filtered.next([res]);
         this.filtered.subscribe((_) => {

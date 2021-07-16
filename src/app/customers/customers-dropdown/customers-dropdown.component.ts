@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerFormDialogComponent } from '../customer-form-dialog/customer-form-dialog.component';
 import { CustomersService } from '../customers.service';
-import { CustomerDto } from '../dtos/customer.dto';
+import { Customer } from '../dtos/customer';
 
 @Component({
   selector: 'app-customers-dropdown',
@@ -22,7 +22,7 @@ export class CustomersDropdownComponent {
 
   filter(term: string = ''): void {
     this.customersService
-      .filter(term)
+      .filter({ search: term, size: 10 })
       .subscribe({ error: (err) => console.error(err) });
   }
 
@@ -32,7 +32,7 @@ export class CustomersDropdownComponent {
       minWidth: '50vw',
     });
 
-    dialogRef.afterClosed().subscribe((res: CustomerDto) => {
+    dialogRef.afterClosed().subscribe((res: Customer) => {
       if (res) {
         this.filtered.next([res]);
         this.filtered.subscribe((_) => {

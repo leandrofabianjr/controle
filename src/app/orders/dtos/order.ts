@@ -1,8 +1,8 @@
-import { CustomerDto } from 'src/app/customers/dtos/customer.dto';
+import { Customer } from 'src/app/customers/dtos/customer';
 import { OrderItem } from './order-item';
 
 export interface Order {
-  customer: CustomerDto;
+  customer: Customer;
   items: OrderItem[];
   dateToBeDone: Date;
 }

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Product } from '../dtos/product';
 import { ProductsService } from '../products.service';
-import { ProductDto } from '../dtos/product.dto';
 
 @Component({
   selector: 'app-product-form-dialog',
@@ -17,7 +17,7 @@ export class ProductFormDialogComponent implements OnInit {
   errorMessage?: string;
 
   constructor(
-    private dialogRef: MatDialogRef<ProductFormDialogComponent, ProductDto>,
+    private dialogRef: MatDialogRef<ProductFormDialogComponent, Product>,
     private fb: FormBuilder,
     private productsService: ProductsService,
     @Inject(MAT_DIALOG_DATA) public name: string

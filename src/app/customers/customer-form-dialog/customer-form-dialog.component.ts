@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CustomersService } from '../customers.service';
-import { CustomerDto } from '../dtos/customer.dto';
+import { Customer } from '../dtos/customer';
 
 @Component({
   selector: 'app-customer-form-dialog',
@@ -19,7 +19,7 @@ export class CustomerFormDialogComponent implements OnInit {
   error?: string;
 
   constructor(
-    private dialogRef: MatDialogRef<CustomerFormDialogComponent, CustomerDto>,
+    private dialogRef: MatDialogRef<CustomerFormDialogComponent, Customer>,
     private fb: FormBuilder,
     private customersService: CustomersService,
     @Inject(MAT_DIALOG_DATA) public name: string
